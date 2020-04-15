@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-//获取盟军建筑
+
 export default{
+  //获取盟军建筑
+  getAllies(){
+    return axios.get("@/../../static/game.json").then((res) => {
+      return Promise.resolve(res.data.allies)
+    })
+  },
   getBuild_allies(){
     return axios.get("@/../../static/game.json").then((res) => {
       return Promise.resolve(res.data.allies.build_main)

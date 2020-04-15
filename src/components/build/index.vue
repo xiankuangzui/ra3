@@ -16,8 +16,10 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex';
+import { myMixin } from '@/components/mixin/fire.js'
 export default {
+    mixins:[myMixin],
     data(){
         return{
             e_build:["建造厂"],
@@ -40,50 +42,23 @@ export default {
         addBuild(){
             this.$api.getBuild_allies().then(res => {
                 let id = this.$store.state.build_store.build_main_id;
-                let build = this.$options.methods.timerBuild;
                 if(this.$store.state.build_store.build_state_main == true){
-                    switch(id){
-                        case "power" : build.bind(this)(res.power.time,res.power.name); break;  
-                        case "train" : build.bind(this)(res.train.time,res.train.name);break;
-                        case "mine" : build.bind(this)(res.mine.time,res.mine.name);break;
-                        case "tank" : build.bind(this)(res.tank.time,res.tank.name);break;
-                        case "air" : build.bind(this)(res.air.time,res.air.name);break;
-                        case "technology" : build.bind(this)(res.technology.time,res.technology.name);break;
-                        
-                    }
+                    let data = res[`${id}`];
+                    this.timerBuild(data.time,data.name,1)
+                    // build.bind(this)(data.time,data.name,1)
                 };                
             }).catch((error) =>{
                 return error;
             })
         },
-        //建造定时器
-        timerBuild(time,name){
-            let that = this
-            let time_out = setTimeout(function(){
-                //改变建造状态
-                that.changeMain(that.build_state_main = false);
-                //在建造部分添加名字
-                that.m_build.push(name);
-            },time*1000);            
-        },
         addDefense(){
             this.$api.getDefense_allies().then(res => {
                 let id = this.$store.state.defense_store.build_defense_id;
-                let defense = this.$options.methods.timerDefense;
                 if(this.$store.state.defense_store.defense_state == true){
-                    switch(id){
-                        case "turret" : defense.bind(this)(res.turret.time,res.turret.name);break;
-                        case "spectrum" : defense.bind(this)(res.spectrum.time,res.spectrum.name);break;
-                    }
+                    let data = res[`${id}`];
+                    this.timerBuild(data.time,data.name,2)
                 }
             })
-        },
-        timerDefense(time,name){
-            let that = this;
-            let time_out = setTimeout(function(){
-                that.changedefense(that.defense_state = false);
-                that.m_build.push(name)
-            },time*1000)
         },
         ...mapMutations(["changeMain","changeMain_id","changeMap","changedefense","changedefense_id"])
     },

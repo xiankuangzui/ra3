@@ -56,56 +56,30 @@ export default {
         addBarracks(){
             this.$api.getTrain_allies().then((res) =>{                
                 let id = this.$store.state.train_store.train_barracks_id;
-                let train = this.$options.methods.timerr_train;
                 if(this.$store.state.train_store.train_state == true){                    
-                    switch(id){
-                        case "dog" : train.bind(this)(res.dog.time,res.dog.name);break;  
-                        case "pk" : train.bind(this)(res.pk.time,res.pk.name);break;
-                        case "javelin" : train.bind(this)(res.javelin.time,res.javelin.name);break;
-                        case "engineer" : train.bind(this)(res.engineer.time,res.engineer.name);break;
-                        case "spy" : train.bind(this)(res.spy.time,res.spy.name);break;
-                        case "tanya" : train.bind(this)(res.tanya.time,res.tanya.name);break;
-                    }
+                    let data = res[`${id}`];
+                    this.timerBuild(data.time,data.name,3)
                 };
             }).catch((error) => {
                 return error;
             })
         },
-        timerr_train(time,name){
-            let that = this;
-            let time_out = setTimeout(function(){
-                //改变兵营建造状态                
-                that.changeTrain(that.train_state = false);
-                that.addArmies(name)
-                that.addArmies_1(name)
-                that.choice_armiesName(name)
-            },time*1000)
-        },
         addTank(){
             this.$api.getTank_allies().then((res) => {
                 let id = this.$store.state.tank_store.build_tank_id;
-                let tank = this.$options.methods.timerr_tank;
                 if(this.$store.state.tank_store.tank_state == true){
-                    switch(id){
-                        case "acv" : tank.bind(this)(res.acv.time,res.acv.name);break;
-                        case "flexo" : tank.bind(this)(res.flexo.time,res.flexo.name);break;
-                    }
+                    let data = res[`${id}`];
+                    this.timerBuild(data.time,data.name,4)
                 }
             })
-        },
-        timerr_tank(time,name){
-            let that = this;
-            let time_out = setTimeout(function(){
-                that.changetank(that.tank_state = false);
-                that.addArmies(name);
-                that.addArmies_1(name);
-                that.choice_armiesName(name);
-            },time*1000)
         },
         addAir(){
             this.$api.getPlane_allies().then((res) => {
                 let id = this.$store.state.air_store.build_plane_id;
-                
+                if(this.$store.state.air_store.air_state == true){
+                    let data = res[`${id}`];
+                    this.timerBuild(data.time,data.name,5)
+                }
             })
         },
         chose(item,index){
