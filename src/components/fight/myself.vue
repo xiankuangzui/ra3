@@ -21,6 +21,7 @@ export default {
     mixins:[myMixin],
     data(){
         return{
+            list:Object,
             armies:[],
             armies_1:[],
             armies_2:[],
@@ -83,19 +84,7 @@ export default {
             })
         },
         chose(item,index){
-            let that = this;
-            this.number = index;
-            this.choice_armies(index);
-            this.findName(item);
-            this.detail = true;
-            var myArmy = setTimeout(function(){
-                that.choice_armiesBlood(that.hp);
-                that.choice_armiesAttack(that.atk);
-                that.choice_armiesAttackType(that.atp);
-                that.choice_armiesDefense(that.def);
-                clearTimeout(myArmy)
-            },100)
-            
+            this.findName(item,index)
         },
         cancel(){
             this.number = -1;
