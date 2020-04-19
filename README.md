@@ -4,7 +4,7 @@ vue ra3
 =======
 预览地址： https://xiankuangzui.github.io/ra3/dist/index.html  
 一个简单版的ra3，还在制作中，目前只有盟军的建造，移动以及攻击；  
-AI以及其他两个阵营和盟军的空军还未制作。
+AI以及其他两个阵营和盟军的空军还在制作。
 
 > ra3 vue简单版
 
